@@ -4,6 +4,7 @@ ruby '2.3.3'
 
 gem 'adequate_exposure'
 gem 'bourbon'
+gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'pg'
 gem 'rails', '5.0.0'
