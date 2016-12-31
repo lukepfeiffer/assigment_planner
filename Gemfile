@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 ruby '2.3.3'
 
 gem 'bourbon'
-gem 'coffee-rails'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'pg'
