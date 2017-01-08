@@ -1,138 +1,149 @@
-this.CourseForm = React.createClass({
-  getIntitialState: function() {
-    return
-    {
-      name: ""
-      professor: ""
-      start_time: ""
-      end_time: ""
+var NewCourseForm = React.createClass({
+
+  getInitialState: function(){
+    return {
+      name: "",
+      description: "",
+      start_time: "",
+      end_time: "",
+      professor: "",
+      days_of_the_week: "",
+      user_id: ""
     };
   },
 
-  render: function() {
-    return React.DOM.form(
-      { className: "course-form" },
-
-      React.DOM.div(
-        { className: "field-container" },
-
-        React.DOM.label(
-          "Course Name"
-        ),
-
-        React.DOM.input(
-          {
-            type: "text",
-            className: "text-field",
-            placeholder: "Calculus 1",
-            name: "name",
-            value: this.state.name,
-            onChange: this.handleOnChange
-          }
-        )
-      ),
-
-      React.DOM.div(
-        { className: "field-container" },
-
-        React.DOM.label(
-          "Professor Name"
-        ),
-
-        React.DOM.input(
-          {
-            type: "text",
-            className: "text-field",
-            placeholder: "Dr. Smith",
-            name: "professor",
-            value: this.state.name,
-            onChange: this.handleOnChange
-          }
-        )
-      ),
-
-      React.DOM.div(
-        { className: "field-container" },
-
-        React.DOM.label(
-          "Start Time"
-        ),
-
-        React.DOM.input(
-          {
-            type: "time",
-            step: "1",
-            className: "time-field",
-            placeholder: "10:35am",
-            name: "end_time",
-            value: this.state.name,
-            onChange: this.handleOnChange
-          }
-        )
-      ),
-
-      React.DOM.div(
-        { className: "field-container" },
-
-        React.DOM.label(
-          "End Time"
-        ),
-
-        React.DOM.input(
-          {
-            type: "time",
-            step: "1",
-            className: "time-field",
-            placeholder: "11:40am",
-            name: "end_time",
-            value: this.state.name,
-            onChange: this.handleOnChange
-          }
-        )
-      ),
-
-      React.DOM.button(
-        {
-          type: "submit",
-          className: "submit",
-          disable: !this.valid()
-        }, "Add Course"
-      )
-    );
-  },
-
-  handleChange: function(event) {
-    var name;
-    var professor;
-    var start_time;
-    var end_time;
-    return name       = event.target.name;
-    return professor  = event.target.professor;
-    return start_time = event.target.start_time;
-    return end_time   = event.target.end_time;
-  },
-
-  handleSumbit: function(event) {
-    var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  newCourseSubmit: function(event){
     event.preventDefault();
-    return $.post("",
-
-    { course: this.state },
-
-    bind(function(data) {
-      this.props.handleNewCourse(data);
-      return this.setState(this.getInitialState());
-    },
-
-    this), "JSON");
+    console.log("submitted");
   },
 
-  render: function() {
-    return React.DOM.form(
-      {
-        className: 'course-form',
-        onSubmit: this.handleSumbit
-      }
-    );
+  handleNameChange: function(event){
+    this.setState({ name: event.target.value});
+  },
+
+  handleProfessorChange: function(event){
+    this.setState({ professor: event.target.value});
+  },
+
+  handleDescriptionChange: function(event){
+    this.setState({ description: event.target.value});
+  },
+
+  handleEndTimeChange: function(event){
+    this.setState({ end_time: event.target.value});
+  },
+
+  handleStartTimeChange: function(event){
+    this.setState({ start_time: event.target.value});
+  },
+
+  handleDaysChange: function(event){
+    this.setState({ days: event.target.value});
+  },
+
+  render: function(){
+    return React.DOM.div({ className: 'form' },
+      React.DOM.fieldset({ className: 'fields' },
+        React.DOM.dl({ className: 'form-fields' },
+
+          React.DOM.dt({ className: 'dt' },
+            React.DOM.label({ className: 'label' },
+              'Course Name'
+            )
+          ),
+
+          React.DOM.dd({ className: 'input' },
+            React.DOM.input({
+                name: 'course[name]',
+                type: 'string',
+                placeholder: 'Chemistry',
+                value: this.state.name,
+                onChange: this.handleNameChange
+              }
+            )
+          ),
+
+          React.DOM.dt({ className: 'dt' },
+            React.DOM.label({ className: 'label' },
+              'Professor'
+            )
+          ),
+
+          React.DOM.dd({ className: 'input' },
+            React.DOM.input({
+                name: 'course[professor]',
+                type: 'string',
+                placeholder: 'Dr. Smith',
+                value: this.state.professor,
+                onChange: this.handleProfessorChange
+              }
+            )
+          ),
+
+          React.DOM.dt({ className: 'dt' },
+            React.DOM.label({ className: 'label' },
+              'Description'
+            )
+          ),
+
+
+          React.DOM.dd({ className: 'textarea' },
+            React.DOM.textarea({
+                name: 'course[description]',
+                type: 'text',
+                placeholder: 'Some elaborate description',
+                value: this.state.description,
+                onChange: this.handleDescriptionChange
+              }
+            )
+          ),
+
+          React.DOM.div({ className: 'inline' },
+            React.DOM.dt({ className: 'dt' },
+              React.DOM.label({ className: 'label' },
+                'Start Time'
+              )
+            ),
+
+            React.DOM.dd({ className: 'time-input' },
+              React.DOM.input({
+                  name: 'course[start_time]',
+                  type: 'time',
+                  placeholder: '3:00pm',
+                  value: this.state.start_time,
+                  onChange: this.handleStartTimeChange
+                }
+              )
+            ),
+
+            React.DOM.dt({ className: 'dt' },
+              React.DOM.label({ className: 'label' },
+                'End Time'
+              )
+            ),
+
+            React.DOM.dd({ className: 'time-input' },
+              React.DOM.input({
+                  name: 'course[name]',
+                  type: 'time',
+                  placeholder: 'Chemistry',
+                  value: this.state.end_time,
+                  onChange: this.handleEndTimeChange
+                }
+              )
+            )
+          )
+        )
+      ),
+
+      React.DOM.fieldset(
+        { className: 'actions' },
+
+        React.DOM.button(
+          { className: 'sumbit' },
+          'Submit'
+        )
+      )
+    )
   }
 });

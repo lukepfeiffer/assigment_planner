@@ -9,6 +9,7 @@ this.Courses = React.createClass({
   },
 
   render: function() {
+    var course;
     return React.DOM.div(
       { className: 'courses' },
 
